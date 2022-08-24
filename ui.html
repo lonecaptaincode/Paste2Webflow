@@ -1,0 +1,43 @@
+<h2>Paste2Webflow</h2>
+<p>The selected Figma element is being transformed and placed in your clipboard. Paste it in Webflow.</p>
+<div id="error" style="color:red"></div>
+<div id="message" style="color:blue"></div>
+</br>
+<button id="copy" style="display:none;">Copy</button>
+
+<script>
+
+document.getElementById('copy').addEventListener("click", function() {
+  parent.postMessage({ pluginMessage: { type: "getClipboardData", } }, '*');    
+});
+
+
+// Listen to response from code
+onmessage = event => { 
+  
+  if(event.data.pluginMessage.type === "error") {      
+    document.getElementById('message').innerHTML = "";
+    document.getElementById('error').innerHTML = event.data.pluginMessage.message; 
+    return;
+  };
+  
+  document.getElementById('error').innerHTML = "";  
+  document.getElementById('message').innerHTML = "Copy <strong>"+ event.data.pluginMessage.name + "</strong> to clipboard in Webflow format";      
+  jsondata = event.data.pluginMessage.jsondata;
+  
+  // Listen to copy event  
+  document.addEventListener('copy', event => {    
+    console.log("Copy");
+    if (event.clipboardData) {    
+      event.clipboardData.setData('application/json', jsondata);                    
+    }
+    event.preventDefault();  
+  }, true);
+  
+  // Fire copy event
+  document.execCommand('copy');    
+}
+
+  
+
+</script>
