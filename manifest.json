@@ -1,10 +1,10 @@
 {
-  "name": "Paste2Webflow",
-  "id": "1139516978082702018",
-  "api": "1.0.0",
-  "main": "code.js",
-  "editorType": [
-    "figma"
-  ],
-  "ui": "ui.html"
+    "name": "Paste2Webflow",
+    "id": "1139516978082702018",
+    "api": "1.0.0",
+    "main": "code.js",
+    "editorType": [
+        "figma"
+    ],
+    "ui": "ui.html"
 }

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outFile":"code.js",
+    "rootDir": "./src",
     "module":"System",
     "target": "es6",
     "lib": ["es6"],
@@ -9,5 +10,13 @@
       "./node_modules/@types",
       "./node_modules/@figma"
     ]
-  }  
+  },
+  "files": [
+    "./src/code.ts",
+    "./src/FigmaParentFrame.ts",
+    "./src/WebflowBuilder.ts",
+    "./src/WebflowElement.ts",
+    "./src/WebflowClass.ts",
+    "./src/Section.ts"
+  ]  
 }

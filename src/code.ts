@@ -23,24 +23,22 @@ figma.showUI(__html__,{width:250,height:250,title:"Paste2Webflow"});
 figma.on("selectionchange", () => { 
     
     let response : object;
-
     
     try {
         // Get selected Element from Figma en do some checks
-        const selectedFrame = new SelectedFrame();
+        const figmaParentFrame = new FigmaParentFrame();
+        const selectedFrame = figmaParentFrame.selectedFrame;
         
         // Let UI know what the selected element is
         response = {name:selectedFrame.name};
 
-        // Create a new Webflow object, to start building the JSON
-        const webflow = new Webflow();
-        
-        // Create a Webflow "Section" object to start transforming the Figma Selection data to a format that Webflow can read
-        const section = new Section(selectedFrame.name,selectedFrame.height, selectedFrame.backgroundColor, webflow);
-        
+        // Create a new webflowBuilder, to start building the JSON        
+        const webflowBuilder = new WebflowBuilder(selectedFrame);
+                                
         // Get Webflow JSON Data
-        const webflowJSONString = webflow.JSONString;
-        //console.log(webflowJSONString);
+        const webflowJSONString = webflowBuilder.getJSONString();
+        
+        //
         response = {name:selectedFrame.name, jsondata:webflowJSONString}      
         figma.ui.postMessage(response);
     }

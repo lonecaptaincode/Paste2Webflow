@@ -5,14 +5,11 @@
  ===================================================
 */
 
-class SelectedFrame {
+class FigmaParentFrame {
 
     private _totalSelection: any;
-    private _selectedElement: FrameNode;
-    private _name: string = '<empty>';
-    private _width: number = 0;
-    private _height: number = 0;
-    private _backgroundColor: string = "#000000";
+    private _selectedFrame: FrameNode;
+
 
     constructor() {
 
@@ -24,11 +21,7 @@ class SelectedFrame {
         this.assertSelectedElementIsFrame();
         this.assertSelectedElementIsTopLevel();
 
-        this._selectedElement = this._totalSelection[0];
-        this._name = this._selectedElement.name;
-        this._width = this._selectedElement.width;
-        this._height = this._selectedElement.height;
-        this._backgroundColor = this.transformBackgroundColorToHex();
+        this._selectedFrame = this._totalSelection[0];
     }
 
     private assertOneElementIsSelected(): Error | boolean {
@@ -59,33 +52,8 @@ class SelectedFrame {
     }
 
 
-    private transformBackgroundColorToHex(): string {
-        const firstFill = JSON.parse(JSON.stringify((this._selectedElement.fills)))[0];
-
-        const r = Math.round(firstFill.color.r.toString() * 255).toString(16);
-        const g = Math.round(firstFill.color.g.toString() * 255).toString(16);
-        const b = Math.round(firstFill.color.b.toString() * 255).toString(16);
-        const redHex = r.length == 1 ? "0" + r : r;
-        const greenHex = g.length == 1 ? "0" + g : g;
-        const blueHex = b.length == 1 ? "0" + b : b;
-
-        return "#" + redHex + greenHex + blueHex;
-    }
-
-    public get name(): string {
-        return this._name;
-    }
-
-    public get width(): number {
-        return this._width;
-    }
-
-    public get height(): number {
-        return this._height;
-    }
-
-    public get backgroundColor(): string {
-        return this._backgroundColor;
+    public get selectedFrame(): FrameNode {
+        return this._selectedFrame;
     }
 
 
