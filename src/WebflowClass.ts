@@ -5,9 +5,7 @@
  =======================================================================
 */
 
-class WebflowClass {
-
-    protected _figmaElement: FrameNode;
+abstract class WebflowClass {
 
     protected _id: string;
     protected _fake: boolean = false;
@@ -21,34 +19,17 @@ class WebflowClass {
     protected _createdBy: string = "Paste2Webflow";
 
     protected _styleLess: string = "";
-    protected _backgroundColor: string = "#000000";
-    protected _width: number = 0;
-    protected _height: number = 0;
 
 
-    constructor(figmaElement: FrameNode) {
-
-        this._figmaElement = figmaElement;
-        this._id = figmaElement.name;
-        this._name = figmaElement.name;
-        this.setStyleLess();
+    constructor(name: string) {
+        this._id = name;
+        this._name = name;
     }
 
-    private setStyleLess(): void {
-
-        // Get background color of element
-        const fill = JSON.parse(JSON.stringify((this._figmaElement.fills)))[0];
-        const backgroundColor = this.transformFigmaRGBToHex(fill.color);
-
-        // Get dimensions
-        //const width = this._figmaElement.width;
-        const height = this._figmaElement.height;
-
-        this._styleLess = `background-color:${backgroundColor};height:${height}px;`;
-    }
+    protected abstract setStyleLess(): void;
 
 
-    private transformFigmaRGBToHex(color: any): string {
+    protected transformFigmaRGBToHex(color: any): string {
         const r = Math.round(color.r.toString() * 255).toString(16);
         const g = Math.round(color.g.toString() * 255).toString(16);
         const b = Math.round(color.b.toString() * 255).toString(16);

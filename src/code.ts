@@ -20,20 +20,20 @@ figma.on("selectionchange", () => {
 
     try {
         // Get selected Element from Figma en do some checks
-        const figmaParentFrame = new FigmaParentFrame();
-        const selectedFrame = figmaParentFrame.selectedFrame;
+        const figmaSelection = new FigmaSelection();
+
 
         // Let UI know what the selected element is
-        response = { name: figmaParentFrame.selectedFrame.name };
+        response = { name: figmaSelection.selectedFrame.name };
 
         // Create a new webflowBuilder, to start building the JSON        
-        const webflowBuilder = new WebflowBuilder(figmaParentFrame);
+        const webflowBuilder = new WebflowBuilder(figmaSelection);
 
         // Get Webflow JSON Data
         const webflowJSONString = webflowBuilder.getJSONString();
-
+        console.log(webflowJSONString);
         // Send response to UI
-        response = { name: selectedFrame.name, jsondata: webflowJSONString };
+        response = { name: figmaSelection.selectedFrame.name, jsondata: webflowJSONString };
         figma.ui.postMessage(response);
     }
     catch (error: any) {

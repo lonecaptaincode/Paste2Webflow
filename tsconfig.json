@@ -13,11 +13,13 @@
   },
   "files": [
     "./src/code.ts",
-    "./src/FigmaParentFrame.ts",
+    "src/FigmaSelection.ts",
     "./src/WebflowBuilder.ts",
     "./src/WebflowElement.ts",
     "./src/WebflowClass.ts",
     "./src/Section.ts",
-    "./src/Container.ts"
+    "./src/SectionClass.ts",
+    "./src/Container.ts",
+    "./src/ContainerClass.ts"
   ]  
 }

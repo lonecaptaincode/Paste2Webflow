@@ -49,31 +49,24 @@ class WebflowBuilder {
             }
         };
 
-    private _figmaParentFrame: FigmaParentFrame;
+    private _selectedFrame: FrameNode;
 
-    constructor(figmaParentFrame: FigmaParentFrame) {
-        this._figmaParentFrame = figmaParentFrame;
+    constructor(figmaSelection: FigmaSelection) {
+        this._selectedFrame = figmaSelection.selectedFrame;
         this.build();
     }
 
     private build(): void {
 
-
-
-
-
         // Add a Webflow Container
         const container = new Container();
-        const containerClass = new WebflowClass(this._figmaParentFrame.selectedFrame);
-        //container.addClass(containerClass.name);
+        const containerClass = new ContainerClass("Container", this._selectedFrame);
+        container.addClass(containerClass.name);
 
         // Create a Webflow Section         
         const section = new Section();
-        const sectionClass = new WebflowClass(this._figmaParentFrame.selectedFrame);
+        const sectionClass = new SectionClass(this._selectedFrame);
         section.addClass(sectionClass.name);
-
-
-        // Add container as child to section
         section.addChild(container.id);
 
         // Push Section
@@ -82,7 +75,7 @@ class WebflowBuilder {
 
         // Push Container
         this.pushNode(container.getJSON());
-        //this.pushStyle(containerClass.getJSON());
+        this.pushStyle(containerClass.getJSON());
     }
 
 
