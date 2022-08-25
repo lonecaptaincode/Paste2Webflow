@@ -6,6 +6,9 @@
 */
 
 class WebflowBuilder {
+
+    private _selectedFrame: FrameNode;
+
     private _webflowJSON: any = {
         type: "@webflow/XscpData",
         payload: {
@@ -27,9 +30,6 @@ class WebflowBuilder {
             paginationRemovedCount: 0
         }
     };
-
-    private _selectedFrame: FrameNode;
-
 
     constructor(selectedFrame: FrameNode) {
         this._selectedFrame = selectedFrame;
