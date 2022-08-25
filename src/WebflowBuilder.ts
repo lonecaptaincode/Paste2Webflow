@@ -7,8 +7,6 @@
 
 class WebflowBuilder {
 
-    private _selectedFrame: FrameNode;
-
     private _webflowJSON: any = {
         type: "@webflow/XscpData",
         payload: {
@@ -31,24 +29,36 @@ class WebflowBuilder {
         }
     };
 
+    private _selectedFrame: FrameNode;
+
     constructor(selectedFrame: FrameNode) {
         this._selectedFrame = selectedFrame;
-        this.initialize();
+        this.build();
     }
 
-    private initialize(): void {
-        // Create a Webflow "Section" object to start transforming the Figma Selection data to a format that Webflow can read
-        this.addSection();
-    }
-
-    private addSection(): void {
-        const section = new Section(this._selectedFrame.name);
-        const sectionClass = new WebflowClass(section.name, this._selectedFrame);
+    private build(): void {
+        // Create a Webflow Section         
+        const section = new Section();
+        const sectionClass = new WebflowClass(this._selectedFrame);
         section.addClass(sectionClass.name);
 
+        // Add a Webflow Container
+        const container = new Container();
+        const containerClass = new WebflowClass(this._selectedFrame);
+        //container.addClass(containerClass.name);
+
+        // Add container as child to section
+        section.addChild(container.id);
+
+        // Push Section
         this.pushNode(section.getJSON());
         this.pushStyle(sectionClass.getJSON());
+
+        // Push Container
+        this.pushNode(container.getJSON());
+        //this.pushStyle(containerClass.getJSON());
     }
+
 
     private pushNode(nodeObject: object): void {
         // Todo: Validate nodeObject somewhow, maybe with an interface?

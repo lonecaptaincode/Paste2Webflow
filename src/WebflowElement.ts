@@ -12,22 +12,12 @@ abstract class WebflowElement {
     protected _tag: string = 'div';
     protected _data: object = {};
 
-    protected _name: string = '<empty>';
     protected _children: string[] = [];
     protected _classes: string[] = [];
     //protected _styleId: string;
 
-    constructor(name: string) {
+    constructor() {
         this._id = this.generateId();
-        this._name = name;
-    }
-
-    addChild(childId: string): void {
-        this._children.push(childId);
-    }
-
-    addClass(className: string): void {
-        this._classes.push(className);
     }
 
     private generateId(): string {
@@ -41,9 +31,18 @@ abstract class WebflowElement {
     }
 
 
-    public get name(): string {
-        return this._name;
+    public addChild(childId: string): void {
+        this._children.push(childId);
     }
+
+    public addClass(className: string): void {
+        this._classes.push(className);
+    }
+
+    public get id() {
+        return this._id;
+    }
+
 
     public getJSON(): object {
         const json = {

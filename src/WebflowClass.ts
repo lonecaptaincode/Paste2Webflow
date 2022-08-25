@@ -26,11 +26,11 @@ class WebflowClass {
     protected _height: number = 0;
 
 
-    constructor(name: string, figmaElement: FrameNode) {
+    constructor(figmaElement: FrameNode) {
 
         this._figmaElement = figmaElement;
-        this._id = name; //(Math.random() + 1).toString(36).substring(2);
-        this._name = name;
+        this._id = figmaElement.name;
+        this._name = figmaElement.name;
         this.setStyleLess();
     }
 
@@ -41,11 +41,10 @@ class WebflowClass {
         const backgroundColor = this.transformFigmaRGBToHex(fill.color);
 
         // Get dimensions
-        const width = this._figmaElement.width;
+        //const width = this._figmaElement.width;
         const height = this._figmaElement.height;
 
         this._styleLess = `background-color:${backgroundColor};height:${height}px;`;
-
     }
 
 

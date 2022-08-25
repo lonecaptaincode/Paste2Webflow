@@ -17,6 +17,7 @@
     "./src/WebflowBuilder.ts",
     "./src/WebflowElement.ts",
     "./src/WebflowClass.ts",
-    "./src/Section.ts"
+    "./src/Section.ts",
+    "./src/Container.ts"
   ]  
 }
