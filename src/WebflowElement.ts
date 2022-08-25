@@ -10,7 +10,8 @@ abstract class WebflowElement {
     protected _id: string;
     protected _type: string = 'Block';
     protected _tag: string = 'div';
-    protected _data: object = {};
+    protected _data: { grid: { type: string; }, tag: string; } = { grid: { type: "section" }, tag: "div" };
+
 
     protected _children: string[] = [];
     protected _classes: string[] = [];
@@ -45,7 +46,15 @@ abstract class WebflowElement {
 
 
     public getJSON(): object {
-        const json = {
+        const json: {
+            "_id": string,
+            "tag": string,
+            "classes": string[],
+            "children": string[],
+            "type": string,
+            "data": { grid: { type: string; }, tag: string; };
+            //"styleId": this._styleId
+        } = {
             "_id": this._id,
             "tag": this._tag,
             "classes": this._classes,

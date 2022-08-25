@@ -10,6 +10,12 @@ class FigmaParentFrame {
     private _totalSelection: any;
     private _selectedFrame: FrameNode;
 
+    private _layoutMode: string;
+
+    private _width: number;
+    private _height: number;
+    private _padding: { top: number, bottom: number, left: number, right: number; } = { top: 0, bottom: 0, left: 0, right: 0 };
+
 
     constructor() {
 
@@ -21,7 +27,15 @@ class FigmaParentFrame {
         this.assertSelectedElementIsFrame();
         this.assertSelectedElementIsTopLevel();
 
+        // Set selected frame
         this._selectedFrame = this._totalSelection[0];
+
+        // Set some initial dimensions
+        this._layoutMode = this._selectedFrame.layoutMode;
+        this._width = this._selectedFrame.width;
+        this._height = this._selectedFrame.height;
+        this.setPadding();
+
     }
 
     private assertOneElementIsSelected(): Error | boolean {
@@ -49,6 +63,21 @@ class FigmaParentFrame {
             throw new Error("Please select a top level frame element, not more than 1 level under the page. (Page > Top Element > Select Element > Items");
         }
         return true;
+    }
+
+
+    public setPadding() {
+        console.log(this._selectedFrame);
+
+        if (this._layoutMode !== "NONE") {
+            this._padding.top = this._selectedFrame.paddingTop;
+            this._padding.bottom = this._selectedFrame.paddingBottom;
+            this._padding.left = this._selectedFrame.paddingLeft;
+            this._padding.right = this._selectedFrame.paddingRight;
+            return;
+        }
+
+
     }
 
 

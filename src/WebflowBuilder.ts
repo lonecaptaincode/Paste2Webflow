@@ -7,45 +7,71 @@
 
 class WebflowBuilder {
 
-    private _webflowJSON: any = {
-        type: "@webflow/XscpData",
+    private _webflowJSON: {
+        type: string;
         payload: {
-            nodes: [],
-            styles: [],
-            assets: [],
-            ix1: [],
+            nodes: object[],
+            styles: object[],
+            assets: string[],
+            ix1: string[],
             ix2: {
-                "interactions": [],
-                "events": [],
-                "actionLists": []
-            }
+                "interactions": string[],
+                "events": string[],
+                "actionLists": string[];
+            },
         },
         meta: {
-            unlinkedSymbolCount: 0,
-            droppedLinks: 0,
-            dynBindRemovedCount: 0,
-            dynListBindRemovedCount: 0,
-            paginationRemovedCount: 0
-        }
-    };
+            unlinkedSymbolCount: number,
+            droppedLinks: number,
+            dynBindRemovedCount: number,
+            dynListBindRemovedCount: number,
+            paginationRemovedCount: number;
+        };
+    } = {
+            type: "@webflow/XscpData",
+            payload: {
+                nodes: [],
+                styles: [],
+                assets: [],
+                ix1: [],
+                ix2: {
+                    "interactions": [],
+                    "events": [],
+                    "actionLists": []
+                }
+            },
+            meta: {
+                unlinkedSymbolCount: 0,
+                droppedLinks: 0,
+                dynBindRemovedCount: 0,
+                dynListBindRemovedCount: 0,
+                paginationRemovedCount: 0
+            }
+        };
 
-    private _selectedFrame: FrameNode;
+    private _figmaParentFrame: FigmaParentFrame;
 
-    constructor(selectedFrame: FrameNode) {
-        this._selectedFrame = selectedFrame;
+    constructor(figmaParentFrame: FigmaParentFrame) {
+        this._figmaParentFrame = figmaParentFrame;
         this.build();
     }
 
     private build(): void {
-        // Create a Webflow Section         
-        const section = new Section();
-        const sectionClass = new WebflowClass(this._selectedFrame);
-        section.addClass(sectionClass.name);
+
+
+
+
 
         // Add a Webflow Container
         const container = new Container();
-        const containerClass = new WebflowClass(this._selectedFrame);
+        const containerClass = new WebflowClass(this._figmaParentFrame.selectedFrame);
         //container.addClass(containerClass.name);
+
+        // Create a Webflow Section         
+        const section = new Section();
+        const sectionClass = new WebflowClass(this._figmaParentFrame.selectedFrame);
+        section.addClass(sectionClass.name);
+
 
         // Add container as child to section
         section.addChild(container.id);

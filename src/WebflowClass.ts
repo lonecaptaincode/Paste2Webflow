@@ -64,7 +64,19 @@ class WebflowClass {
     }
 
     public getJSON(): object {
-        const json = {
+        const json: {
+            "styleLess": string;
+            "_id": string;
+            "fake": boolean;
+            "type": string;
+            "name": string;
+            "namespace": string;
+            "comb": string;
+            "selector": string;
+            "children": string[],
+            "createdBy": string,
+        }
+            = {
             "styleLess": this._styleLess,
             "_id": this._id,
             "fake": this._fake,
