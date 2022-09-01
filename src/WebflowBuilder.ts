@@ -61,22 +61,18 @@ class WebflowBuilder {
 
         // Add a Webflow Container
         const container = new Container(this._selectedFrame);
-        const containerClass = new ContainerClass(this._selectedFrame);
-        container.addClass(containerClass.name);
 
         // Create a Webflow Section         
-        const section = new Section();
-        const sectionClass = new SectionClass(this._selectedFrame);
-        section.addClass(sectionClass.name);
+        const section = new Section(this._selectedFrame);
         section.addChild(container.id);
 
         // Push Section
         this.pushNode(section.getJSON());
-        this.pushStyle(sectionClass.getJSON());
+        this.pushStyle(section.class.getJSON());
 
         // Push Container
         this.pushNode(container.getJSON());
-        this.pushStyle(containerClass.getJSON());
+        this.pushStyle(container.class.getJSON());
     }
 
     private pushNode(nodeObject: object): void {

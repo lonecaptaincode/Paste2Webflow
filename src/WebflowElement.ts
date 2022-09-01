@@ -12,14 +12,17 @@ abstract class WebflowElement {
     protected _tag: string = 'div';
     protected _data: { grid: { type: string; }, tag: string; } = { grid: { type: "section" }, tag: "div" };
 
-
-    protected _children: string[] = [];
-    protected _classes: string[] = [];
+    protected _childrenIDs: string[] = [];
+    protected _classNames: string[] = [];
     //protected _styleId: string;
+
+    protected abstract _class: WebflowClass;
 
     constructor() {
         this._id = this.generateId();
     }
+
+    protected abstract get class(): WebflowClass;
 
     private generateId(): string {
         let result = '';
@@ -31,19 +34,17 @@ abstract class WebflowElement {
         return result;
     }
 
-
-    public addChild(childId: string): void {
-        this._children.push(childId);
+    private addClass(className: string): void {
+        this._classNames.push(className);
     }
 
-    public addClass(className: string): void {
-        this._classes.push(className);
+    public addChild(childId: string): void {
+        this._childrenIDs.push(childId);
     }
 
     public get id(): string {
         return this._id;
     }
-
 
     public getJSON(): object {
         const json: {
@@ -57,8 +58,8 @@ abstract class WebflowElement {
         } = {
             "_id": this._id,
             "tag": this._tag,
-            "classes": this._classes,
-            "children": this._children,
+            "classes": this._classNames,
+            "children": this._childrenIDs,
             "type": this._type,
             "data": this._data
             //"styleId": this._styleId

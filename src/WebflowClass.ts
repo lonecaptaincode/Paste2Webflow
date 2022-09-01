@@ -29,6 +29,7 @@ abstract class WebflowClass {
     protected abstract setStyleLess(): void;
 
 
+
     protected transformFigmaRGBToHex(color: any): string {
         const r = Math.round(color.r.toString() * 255).toString(16);
         const g = Math.round(color.g.toString() * 255).toString(16);

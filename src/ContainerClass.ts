@@ -20,11 +20,11 @@ class ContainerClass extends WebflowClass {
         this._selectedFrame = selectedFrame;
         this._layoutMode = selectedFrame.layoutMode;
         this._parentSectionwidth = selectedFrame.width;
+        this.setPadding();
         this.setStyleLess();
     }
 
     protected setStyleLess(): void {
-        this.setPadding();
         this._styleLess = `max-width:${this._parentSectionwidth}px;height:100%;padding:${this._padding.top}px ${this._padding.right}px ${this._padding.bottom}px ${this._padding.left}px;`;
     }
 
@@ -58,5 +58,9 @@ class ContainerClass extends WebflowClass {
                 this._padding.left = Math.round(child.x);
             }
         }
+    }
+
+    public getUsableWidth() {
+        return this._parentSectionwidth - this._padding.left - this._padding.right;
     }
 }

@@ -19,7 +19,7 @@
     "./src/WebflowClass.ts",
     "./src/Section.ts",
     "./src/SectionClass.ts",
-    "./src/Container.ts",
-    "./src/ContainerClass.ts"
+    "./src/ContainerClass.ts",
+    "./src/Container.ts"
   ]  
 }
