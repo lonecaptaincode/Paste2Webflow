@@ -25,7 +25,7 @@ abstract class WebflowElement {
         let result = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         const length = characters.length;
-        for (var i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * length));
         }
         return result;
@@ -40,7 +40,7 @@ abstract class WebflowElement {
         this._classes.push(className);
     }
 
-    public get id() {
+    public get id(): string {
         return this._id;
     }
 

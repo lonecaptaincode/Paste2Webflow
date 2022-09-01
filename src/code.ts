@@ -16,28 +16,24 @@ figma.showUI(__html__, { width: 250, height: 250, title: "Paste2Webflow" });
 
 figma.on("selectionchange", () => {
 
-    let response: object; //{ type: string, message: string, name: string, jsondata: string; };
+    let response: { type: string, name: string, message: string, jsondata: string; };
 
     try {
         // Get selected Element from Figma en do some checks
         const figmaSelection = new FigmaSelection();
-
-
-        // Let UI know what the selected element is
-        response = { name: figmaSelection.selectedFrame.name };
 
         // Create a new webflowBuilder, to start building the JSON        
         const webflowBuilder = new WebflowBuilder(figmaSelection);
 
         // Get Webflow JSON Data
         const webflowJSONString = webflowBuilder.getJSONString();
-        console.log(webflowJSONString);
+        //console.log(webflowJSONString);
         // Send response to UI
-        response = { name: figmaSelection.selectedFrame.name, jsondata: webflowJSONString };
+        response = { type: "message", message: "succes", name: figmaSelection.selectedFrame.name, jsondata: webflowJSONString };
         figma.ui.postMessage(response);
     }
     catch (error: any) {
-        response = { type: "error", message: error.message };
+        response = { type: "error", message: error.message, name: "", jsondata: "" };
         figma.ui.postMessage(response);
     }
 });

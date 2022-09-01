@@ -27,7 +27,7 @@ onmessage = event => {
   
   // Listen to copy event  
   document.addEventListener('copy', event => {    
-    console.log("Copy");
+    //console.log("Copy");
     if (event.clipboardData) {    
       event.clipboardData.setData('application/json', jsondata);                    
     }

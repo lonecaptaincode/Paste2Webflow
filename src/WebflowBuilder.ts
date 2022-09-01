@@ -51,6 +51,7 @@ class WebflowBuilder {
 
     private _selectedFrame: FrameNode;
 
+
     constructor(figmaSelection: FigmaSelection) {
         this._selectedFrame = figmaSelection.selectedFrame;
         this.build();
@@ -59,8 +60,8 @@ class WebflowBuilder {
     private build(): void {
 
         // Add a Webflow Container
-        const container = new Container();
-        const containerClass = new ContainerClass("Container", this._selectedFrame);
+        const container = new Container(this._selectedFrame);
+        const containerClass = new ContainerClass(this._selectedFrame);
         container.addClass(containerClass.name);
 
         // Create a Webflow Section         
@@ -77,7 +78,6 @@ class WebflowBuilder {
         this.pushNode(container.getJSON());
         this.pushStyle(containerClass.getJSON());
     }
-
 
     private pushNode(nodeObject: object): void {
         // Todo: Validate nodeObject somewhow, maybe with an interface?
