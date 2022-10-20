@@ -20,6 +20,8 @@
     "./src/Section.ts",
     "./src/SectionClass.ts",
     "./src/ContainerClass.ts",
-    "./src/Container.ts"
+    "./src/Container.ts",
+    "./src/Grid.ts",
+    "./src/GridClass.ts"
   ]  
 }

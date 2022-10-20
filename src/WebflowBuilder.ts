@@ -59,10 +59,14 @@ class WebflowBuilder {
 
     private build(): void {
 
-        // Add a Webflow Container
-        const container = new Container(this._selectedFrame);
+        // Create a Webflow Grid
+        const grid = new Grid(this._selectedFrame);
 
-        // Create a Webflow Section         
+        // Create a Webflow Container (with left and right padding)
+        const container = new Container(this._selectedFrame);
+        container.addChild(grid.id);
+
+        // Create a Webflow Section (with top and bottom padding)         
         const section = new Section(this._selectedFrame);
         section.addChild(container.id);
 
@@ -73,6 +77,10 @@ class WebflowBuilder {
         // Push Container
         this.pushNode(container.getJSON());
         this.pushStyle(container.class.getJSON());
+
+        // Push Grid
+        this.pushNode(grid.getJSON());
+        this.pushStyle(grid.class.getJSON());
     }
 
     private pushNode(nodeObject: object): void {

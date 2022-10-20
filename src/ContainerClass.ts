@@ -1,7 +1,7 @@
 /* 
 ========================================================================
  Copyright (C) 2022 lonecaptain. All Rights Reserved
- Parent element for every Webflow element
+ Class properties for Container
  =======================================================================
 */
 
@@ -14,7 +14,7 @@ class ContainerClass extends WebflowClass {
 
     constructor(selectedFrame: FrameNode) {
 
-        super(selectedFrame.name + "Container");
+        super(selectedFrame.name + " Container");
 
         // For containers, we need the selectedFrame
         this._selectedFrame = selectedFrame;
@@ -39,6 +39,16 @@ class ContainerClass extends WebflowClass {
         }
     }
 
+    private setPaddingLeft(): void {
+        const children = this._selectedFrame.children;
+        this._padding.left = children[0].x;
+        for (const child of children) {
+            if (child.x < this._padding.left) {
+                this._padding.left = Math.round(child.x);
+            }
+        }
+    }
+
     private setPaddingRight(): void {
         const children = this._selectedFrame.children;
         this._padding.right = this._parentSectionwidth - (children[0].x + children[0].width);
@@ -46,16 +56,6 @@ class ContainerClass extends WebflowClass {
             let paddingRight = this._parentSectionwidth - (child.x + child.width);
             if (paddingRight < this._padding.right) {
                 this._padding.right = Math.round(paddingRight);
-            }
-        }
-    }
-
-    private setPaddingLeft(): void {
-        const children = this._selectedFrame.children;
-        this._padding.left = children[0].x;
-        for (const child of children) {
-            if (child.x < this._padding.left) {
-                this._padding.left = Math.round(child.x);
             }
         }
     }

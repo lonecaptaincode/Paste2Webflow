@@ -1,7 +1,7 @@
 /* 
 ========================================================================
  Copyright (C) 2022 lonecaptain. All Rights Reserved
- Parent element for every Webflow element
+ Class properties for Section
  =======================================================================
 */
 

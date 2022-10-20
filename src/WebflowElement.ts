@@ -34,9 +34,9 @@ abstract class WebflowElement {
         return result;
     }
 
-    private addClass(className: string): void {
-        this._classNames.push(className);
-    }
+    // private addClass(className: string): void {
+    //     this._classNames.push(className);
+    // }
 
     public addChild(childId: string): void {
         this._childrenIDs.push(childId);
