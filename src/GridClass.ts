@@ -63,7 +63,8 @@ class GridClass extends WebflowClass {
 
     private buildColumns(): void {
 
-        const sortedChildren = this.sortChildrenByX();
+        const sortedChildren = this.getSortedChildren("x");
+        console.log(sortedChildren);
         let columns: Column[] = [];
 
         for (const child of sortedChildren) {
@@ -78,6 +79,11 @@ class GridClass extends WebflowClass {
             if (child.rightX > columns[columnNumber].rightX) {
                 columns[columnNumber].rightX = child.rightX;
             }
+        }
+
+        // Set real width
+        for (const child of sortedChildren) {
+
         }
 
         this._columns = columns;
@@ -106,14 +112,14 @@ class GridClass extends WebflowClass {
         return (child.x < nearestColumn.rightX) ? nearestColumnNumber : null;
     }
 
-    private sortChildrenByX(): Child[] {
+    private getSortedChildren(sort: "x" | "y"): Child[] {
 
         const sortedChildren: Child[] = [];
         for (const child of this._selectedFrame.children) {
             sortedChildren.push(new Child(child.id, child.name, child.x, child.y, child.width, child.height, (child.y + child.height), (child.x + child.width)));
         }
 
-        return sortedChildren.sort((a, b) => a.x - b.x);
+        return sortedChildren.sort((a, b) => a[sort] - b[sort]);
     }
 
 }
