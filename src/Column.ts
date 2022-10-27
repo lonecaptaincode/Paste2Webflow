@@ -15,9 +15,9 @@ class Column {
     private _children: Child[];
 
     constructor(x: number, rightX: number, children: Child[]) {
-        this._x = x;
-        this._rightX = rightX;
-        this._realWidth = rightX - x;
+        this._x = Math.round(x);
+        this._rightX = Math.round(rightX);
+        this._realWidth = Math.round(rightX - x);
         this._finalWidth = this._realWidth;
         this._children = children;
     }
@@ -49,19 +49,19 @@ class Column {
 
     // Setters
     public set x(x: number) {
-        this._x = x;
+        this._x = Math.round(x);
     }
 
     public set rightX(rightX: number) {
-        this._rightX = rightX;
+        this._rightX = Math.round(rightX);
     }
 
     public set realWidth(realWidth: number) {
-        this._realWidth = realWidth;
+        this._realWidth = Math.round(realWidth);
     }
 
     public set finalWidth(finalWidth: number) {
-        this._finalWidth = finalWidth;
+        this._finalWidth = Math.round(finalWidth);
     }
 
     public set fraction(fraction: string) {

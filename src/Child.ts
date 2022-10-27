@@ -21,10 +21,10 @@ class Child {
     constructor(id: string, name: string, x: number, y: number, width: number, height: number) {
         this._id = id;
         this._name = name;
-        this._x = x;
-        this._y = y;
-        this._width = width;
-        this._height = height;
+        this._x = Math.round(x);
+        this._y = Math.round(y);
+        this._width = Math.round(width);
+        this._height = Math.round(height);
         this._rightX = x + width;
         this._bottomY = y + height;
     }
@@ -72,27 +72,27 @@ class Child {
     }
 
     public set x(x: number) {
-        this._x = x;
+        this._x = Math.round(x);
     }
 
     public set y(y: number) {
-        this._y = y;
+        this._y = Math.round(y);
     }
 
     public set width(width: number) {
-        this._width = width;
+        this._width = Math.round(width);
     }
 
     public set height(height: number) {
-        this._height = height;
+        this._height = Math.round(height);
     }
 
     public set bottomY(bottomY: number) {
-        this._bottomY = bottomY;
+        this._bottomY = Math.round(bottomY);
     }
 
     public set rightX(rightX: number) {
-        this._rightX = rightX;
+        this._rightX = Math.round(rightX);
     }
 
 }

@@ -31,62 +31,49 @@ class GridClass extends WebflowClass {
 
         let gridTemplateRows: string = "auto";
         let gridTemplateColumns: string = "";
-        let smallestColGap: number = 0;
-        let previousColumnRightX: number = 0;
 
-        for (let i = 0; i < this._columns.length; i++) {
-            let col = this._columns[i];
-
-
-            // Gap
-            let difference = 0;
-            if (i > 0) {
-                let currentColGap = Math.round(col.x - previousColumnRightX);
-                if (i == 1) {
-                    smallestColGap = currentColGap;
-                }
-                if (currentColGap < smallestColGap) {
-                    difference = smallestColGap - currentColGap;
-                    smallestColGap = currentColGap;
-                }
-            }
-            previousColumnRightX = col.rightX;
-            // Width
-            const columnWidth: number = Math.round(col.rightX - col.x + difference);
-            gridTemplateColumns += columnWidth + "px ";
-            console.log("colwidth " + columnWidth);
+        for (const column of this._columns) {
+            gridTemplateColumns += column.finalWidth + "px ";
         }
 
-        this._styleLess = `grid-template-columns:${gridTemplateColumns}; grid-template-rows:${gridTemplateRows};col-gap:${smallestColGap}`;
+        this._styleLess = `grid-template-columns:${gridTemplateColumns}; grid-template-rows:${gridTemplateRows};grid-column-gap: 0px; grid-row-gap: 0px;`;
     }
 
 
     private buildColumns(): void {
 
         const sortedChildren = this.sortChildren("x");
-        console.log(sortedChildren);
         let columns: Column[] = [];
 
         for (const child of sortedChildren) {
             const columnNumber = this.findColumnNumberForChild(child, columns);
 
+            // Create new column with child
             if (columnNumber === null) {
                 columns.push(new Column(child.x, child.rightX, [child]));
                 continue;
             }
-            // check colspan
+
+            // Add child to an existing column
             columns[columnNumber].children.push(child);
+
+            // Adjust column width if neccessary
             if (child.rightX > columns[columnNumber].rightX) {
                 columns[columnNumber].rightX = child.rightX;
             }
         }
 
-        // Set real width
-        for (const child of sortedChildren) {
-
-        }
-
         this._columns = columns;
+        this.calculateColumnsFinalWidth();
+    }
+
+    private calculateColumnsFinalWidth() {
+
+        let previousColumn = this._columns[0];
+        for (const column of this._columns) {
+            previousColumn.finalWidth = column.x - previousColumn.x;
+            previousColumn = column;
+        }
     }
 
     private findColumnNumberForChild(child: Child, columns: Column[]): number | null {
@@ -95,7 +82,7 @@ class GridClass extends WebflowClass {
         if (columns.length < 2) {
             return (columns.length === 1 && child.x < columns[0].rightX) ? 0 : null;
         }
-        // Multiple columns available, find the nearest one, and check if the child fits
+        // Multiple columns available, find the nearest one, and check if the child fits;
         let nearestColumn: Column = columns[0];
         let nearestColumnNumber: number = 0;
         let lowestDifference: number = child.x - columns[0].x;
