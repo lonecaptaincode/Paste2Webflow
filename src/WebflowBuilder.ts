@@ -68,6 +68,7 @@ class WebflowBuilder {
         // Create a Webflow Grid
         const grid = new Grid(this._selectedFrame, container);
 
+        // Dit recursive maken oid? Dat de hele JSON vanuit Section komt,(children loopen)?
 
         // Push Section
         this.pushNode(section.getJSON());
