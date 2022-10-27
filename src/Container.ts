@@ -8,10 +8,9 @@
 
 class Container extends WebflowElement {
 
-    private _selectedFrame: FrameNode;
     protected _class: ContainerClass;
 
-    constructor(selectedFrame: FrameNode) {
+    constructor(selectedFrame: FrameNode, parent: Section) {
         super();
 
         this._class = new ContainerClass(selectedFrame);
@@ -20,7 +19,8 @@ class Container extends WebflowElement {
         this._type = "Container";
         this._tag = "div";
         this._data = { grid: { type: "container" }, tag: "div" };
-        this._selectedFrame = selectedFrame;
+
+        parent.addChild(this._id);
     }
 
     public get class(): ContainerClass {

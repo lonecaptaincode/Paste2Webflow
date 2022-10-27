@@ -18,15 +18,15 @@ class Child {
 
 
 
-    constructor(id: string, name: string, x: number, y: number, width: number, height: number, bottomY: number, rightX: number) {
+    constructor(id: string, name: string, x: number, y: number, width: number, height: number) {
         this._id = id;
         this._name = name;
         this._x = x;
         this._y = y;
         this._width = width;
         this._height = height;
-        this._bottomY = bottomY;
-        this._rightX = rightX;
+        this._rightX = x + width;
+        this._bottomY = y + height;
     }
 
     // Getters

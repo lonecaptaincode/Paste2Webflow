@@ -11,7 +11,7 @@ class Grid extends WebflowElement {
     protected _class: GridClass;
 
 
-    constructor(selectedFrame: FrameNode) {
+    constructor(selectedFrame: FrameNode, parent: Container) {
         super();
 
         this._class = new GridClass(selectedFrame);
@@ -20,6 +20,7 @@ class Grid extends WebflowElement {
         this._type = "Grid";
         this._tag = "div";
         this._data = { grid: { type: "two-by-two" }, tag: "div" };
+        parent.addChild(this._id);
     }
 
     public get class(): GridClass {
