@@ -71,24 +71,24 @@ class WebflowBuilder {
         // Dit recursive maken oid? Dat de hele JSON vanuit Section komt,(children loopen)?
 
         // Push Section
-        this.pushNode(section.getJSON());
-        this.pushStyle(section.class.getJSON());
+        this.addNode(section.getJSON());
+        this.addStyle(section.class.getJSON());
 
         // Push Container
-        this.pushNode(container.getJSON());
-        this.pushStyle(container.class.getJSON());
+        this.addNode(container.getJSON());
+        this.addStyle(container.class.getJSON());
 
         // Push Grid
-        this.pushNode(grid.getJSON());
-        this.pushStyle(grid.class.getJSON());
+        this.addNode(grid.getJSON());
+        this.addStyle(grid.class.getJSON());
     }
 
-    private pushNode(nodeObject: object): void {
+    private addNode(nodeObject: object): void {
         // Todo: Validate nodeObject somewhow, maybe with an interface?
         this._webflowJSON.payload.nodes.push(nodeObject);
     }
 
-    private pushStyle(styleObject: object): void {
+    private addStyle(styleObject: object): void {
         // Todo: Validate styleObject somewhow, maybe with an interface? Or pass custom object?
         this._webflowJSON.payload.styles.push(styleObject);
     }
