@@ -8,34 +8,8 @@
 class GridClass extends WebflowClass {
 
     private _selectedFrame: FrameNode;
-    private _rows: {
-        y: number;
-        bottomY: number;
-        children: {
-            id: string;
-            name: string;
-            x: number;
-            y: number;
-            width: number;
-            height: number;
-            bottomY: number;
-            rightX: number;
-        }[];
-    }[] = [];
-    private _columns: {
-        x: number;
-        rightX: number;
-        children: {
-            id: string;
-            name: string;
-            x: number;
-            y: number;
-            width: number;
-            height: number;
-            bottomY: number;
-            rightX: number;
-        }[];
-    }[] = [];
+    //private _rows: Row[] = [];
+    private _columns: Column[] = [];
 
     constructor(selectedFrame: FrameNode) {
 
@@ -44,26 +18,50 @@ class GridClass extends WebflowClass {
         // For grid, we need the selectedFrame
         this._selectedFrame = selectedFrame;
 
+        this.buildColumns();
+        //this.buildRows();
+        // Decide between a grid with columns or a grid with rows
+        // Decide if some children should get their own grid/wrapper (headers for example) 
+        //and delete them from columns/rows
+
         this.setStyleLess();
     }
 
     protected setStyleLess(): void {
-        this.buildColumns();
 
-        let gridTemplateColumns: string = "";
         let gridTemplateRows: string = "auto";
+        let gridTemplateColumns: string = "";
+        let smallestColGap: number = 0;
+        let previousColumnRightX: number = 0;
 
-        for (const col of this._columns) {
-            gridTemplateColumns += "1fr ";
+        for (let i = 0; i < this._columns.length; i++) {
+            let col = this._columns[i];
+
+
+            // Gap
+            let difference = 0;
+            if (i > 0) {
+                let currentColGap = Math.round(col.x - previousColumnRightX);
+                if (i == 1) {
+                    smallestColGap = currentColGap;
+                }
+                if (currentColGap < smallestColGap) {
+                    difference = smallestColGap - currentColGap;
+                    smallestColGap = currentColGap;
+                }
+            }
+            previousColumnRightX = col.rightX;
+            // Width
+            var columnWidth: number = Math.round(col.rightX - col.x + difference);
+            gridTemplateColumns += columnWidth + "px ";
+            console.log("colwidth " + columnWidth);
         }
 
-        this._styleLess = `grid-template-columns:${gridTemplateColumns}; grid-template-rows:${gridTemplateRows}`;
+        this._styleLess = `grid-template-columns:${gridTemplateColumns}; grid-template-rows:${gridTemplateRows};col-gap:${smallestColGap}`;
     }
 
-    private buildColumns(): void {
 
-        interface Child { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }
-        interface Column { x: number; rightX: number; children: Child[]; }
+    private buildColumns(): void {
 
         const sortedChildren = this.sortChildrenByX();
         let columns: Column[] = [];
@@ -72,7 +70,7 @@ class GridClass extends WebflowClass {
             const columnNumber = this.findColumnNumberForChild(child, columns);
 
             if (columnNumber === null) {
-                columns.push({ x: child.x, rightX: child.rightX, children: [child] });
+                columns.push(new Column(child.x, child.rightX, [child]));
                 continue;
             }
             // check colspan
@@ -85,37 +83,7 @@ class GridClass extends WebflowClass {
         this._columns = columns;
     }
 
-    private buildRows(): void {
-
-        interface Child { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }
-        interface Row { y: number; bottomY: number; children: Child[]; }
-
-        const sortedChildren = this.sortChildrenByY();
-        let rows: Row[] = [];
-
-        for (const child of sortedChildren) {
-            const rowNumber = this.findRowNumberForChild(child, rows);
-            console.log(child.name + " komt in row " + rowNumber);
-
-            if (rowNumber === null) {
-                rows.push({ y: child.y, bottomY: child.bottomY, children: [child] });
-                continue;
-            }
-            // check rowspan
-            rows[rowNumber].children.push(child);
-            if (child.bottomY > rows[rowNumber].bottomY) {
-                rows[rowNumber].bottomY = child.bottomY;
-            }
-        }
-
-        this._rows = rows;
-    }
-
-
-    private findColumnNumberForChild(child: { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }, columns: { x: number; rightX: number; children: { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }[]; }[]): number | null {
-
-        interface Child { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }
-        interface Column { x: number; rightX: number; children: Child[]; }
+    private findColumnNumberForChild(child: Child, columns: Column[]): number | null {
 
         // If only one column is available, check if it fits. If not, create a new one.
         if (columns.length < 2) {
@@ -138,7 +106,88 @@ class GridClass extends WebflowClass {
         return (child.x < nearestColumn.rightX) ? nearestColumnNumber : null;
     }
 
+    private sortChildrenByX(): Child[] {
 
+        const sortedChildren: Child[] = [];
+        for (const child of this._selectedFrame.children) {
+            sortedChildren.push(new Child(child.id, child.name, child.x, child.y, child.width, child.height, (child.y + child.height), (child.x + child.width)));
+        }
+
+        return sortedChildren.sort((a, b) => a.x - b.x);
+    }
+
+}
+
+
+
+/*private buildRows(): void {
+
+        interface Child { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }
+        interface Row { y: number; bottomY: number; children: Child[]; }
+
+        const sortedChildren = this.sortChildrenByY();
+        let rows: Row[] = [];
+
+        for (const child of sortedChildren) {
+            const rowNumber = this.findRowNumberForChild(child, rows);
+
+            if (rowNumber === null) {
+                rows.push({ y: child.y, bottomY: child.bottomY, children: [child] });
+                continue;
+            }
+            // check rowspan
+            rows[rowNumber].children.push(child);
+            if (child.bottomY > rows[rowNumber].bottomY) {
+                rows[rowNumber].bottomY = child.bottomY;
+            }
+        }
+
+        this._rows = rows;
+    }*/
+
+
+
+/*
+private sortChildrenByY(): { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }[] {
+
+    interface Child { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }
+
+    const sortedChildren: Child[] = [];
+    for (const child of this._selectedFrame.children) {
+        sortedChildren.push({ id: child.id, name: child.name, x: child.x, y: child.y, width: child.width, height: child.height, bottomY: (child.y + child.height), rightX: (child.x + child.width) });
+    }
+
+    return sortedChildren.sort((a, b) => a.y - b.y);
+}
+*/
+
+/*
+    private calculateFractions(): string {
+ 
+        let columns: { width: number, fraction: string; }[] = [];
+        //const numberOfColumns: number = this._columns.length;
+        let totalColumnsWidth: number = 0;
+ 
+        for (const col of this._columns) {
+            let columnWidth = col.rightX - col.x;
+            columns.push({ width: columnWidth, fraction: "" });
+            totalColumnsWidth += columnWidth;
+        }
+ 
+ 
+        for (const column of columns) {
+            let percentageOfTotal = totalColumnsWidth / column.width;
+ 
+            //fractions += "1fr ";
+        }
+ 
+ 
+        //let fractions: string = "";
+        //return fractions;
+    }
+*/
+
+/*
     private findRowNumberForChild(child: { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }, rows: { y: number; bottomY: number; children: { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }[]; }[]): number | null {
 
         interface Child { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }
@@ -164,28 +213,4 @@ class GridClass extends WebflowClass {
 
         return (child.y < nearestRow.bottomY) ? nearestRowNumber : null;
     }
-
-    private sortChildrenByX(): { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }[] {
-
-        interface Child { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }
-
-        const sortedChildren: Child[] = [];
-        for (const child of this._selectedFrame.children) {
-            sortedChildren.push({ id: child.id, name: child.name, x: child.x, y: child.y, width: child.width, height: child.height, bottomY: (child.y + child.height), rightX: (child.x + child.width) });
-        }
-
-        return sortedChildren.sort((a, b) => a.x - b.x);
-    }
-
-    private sortChildrenByY(): { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }[] {
-
-        interface Child { id: string; name: string; x: number; y: number; width: number; height: number; bottomY: number; rightX: number; }
-
-        const sortedChildren: Child[] = [];
-        for (const child of this._selectedFrame.children) {
-            sortedChildren.push({ id: child.id, name: child.name, x: child.x, y: child.y, width: child.width, height: child.height, bottomY: (child.y + child.height), rightX: (child.x + child.width) });
-        }
-
-        return sortedChildren.sort((a, b) => a.y - b.y);
-    }
-}
+    */
