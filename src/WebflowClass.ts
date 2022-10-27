@@ -11,11 +11,11 @@ abstract class WebflowClass {
     protected _fake: boolean = false;
     protected _type: string = "class";
 
-    protected _name: string = '<empty>';
+    protected _name: string = "<empty>";
     protected _namespace: string = "";
     protected _comb: string = "";
     protected _selector: any = null;
-    protected _children: string[] = [];
+    protected _childrenIDs: string[] = [];
     protected _createdBy: string = "Paste2Webflow";
 
     protected _styleLess: string = "";
@@ -67,7 +67,7 @@ abstract class WebflowClass {
             "namespace": this._namespace,
             "comb": this._comb,
             "selector": this._selector,
-            "children": this._children,
+            "children": this._childrenIDs,
             "createdBy": this._createdBy,
         };
         return json;

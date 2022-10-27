@@ -50,37 +50,39 @@ class WebflowBuilder {
         };
 
     private _selectedFrame: FrameNode;
+    private _elements: (Section | Container | Grid)[] = [];
+
 
 
     constructor(figmaSelection: FigmaSelection) {
         this._selectedFrame = figmaSelection.selectedFrame;
-        this.build();
+        this.buildElements();
+        this.buildJSON();
     }
 
-    private build(): void {
+    private buildElements(): void {
 
         // Create a Webflow Section (with top and bottom padding)         
         const section = new Section(this._selectedFrame);
+        this._elements.push(section);
 
         // Create a Webflow Container (with left and right padding)
         const container = new Container(this._selectedFrame, section);
+        this._elements.push(container);
 
         // Create a Webflow Grid
         const grid = new Grid(this._selectedFrame, container);
+        this._elements.push(grid);
 
-        // Dit recursive maken oid? Dat de hele JSON vanuit Section komt,(children loopen)?
 
-        // Push Section
-        this.addNode(section.getJSON());
-        this.addStyle(section.class.getJSON());
+    }
 
-        // Push Container
-        this.addNode(container.getJSON());
-        this.addStyle(container.class.getJSON());
+    private buildJSON() {
 
-        // Push Grid
-        this.addNode(grid.getJSON());
-        this.addStyle(grid.class.getJSON());
+        for (const element of this._elements) {
+            this.addNode(element.getJSON());
+            this.addStyle(element.class.getJSON());
+        }
     }
 
     private addNode(nodeObject: object): void {

@@ -9,7 +9,7 @@ figma.showUI(__html__, { width: 250, height: 250, title: "Paste2Webflow" });
 
 // DEZE GEBRUIKEN ALS DE KNOP STRAKS ACTIEF IS
 // figma.ui.onmessage = msg => { 
-//   if (msg.type === 'getClipboardData') {
+//   if (msg.type === "getClipboardData") {
 //      const selection = new Selection();
 //   }
 // };

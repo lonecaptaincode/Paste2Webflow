@@ -8,8 +8,8 @@
 abstract class WebflowElement {
 
     protected _id: string;
-    protected _type: string = 'Block';
-    protected _tag: string = 'div';
+    protected _type: string = "Block";
+    protected _tag: string = "div";
     protected _data: { grid: { type: string; }, tag: string; } = { grid: { type: "section" }, tag: "div" };
 
     protected _childrenIDs: string[] = [];
@@ -25,8 +25,8 @@ abstract class WebflowElement {
     protected abstract get class(): WebflowClass;
 
     private generateId(): string {
-        let result = '';
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = "";
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         const length = characters.length;
         for (let i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * length));

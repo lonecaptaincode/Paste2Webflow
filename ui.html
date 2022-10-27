@@ -7,8 +7,8 @@
 
 <script>
 
-document.getElementById('copy').addEventListener("click", function() {
-  parent.postMessage({ pluginMessage: { type: "getClipboardData", } }, '*');    
+document.getElementById("copy").addEventListener("click", function() {
+  parent.postMessage({ pluginMessage: { type: "getClipboardData", } }, "*");
 });
 
 
@@ -16,26 +16,26 @@ document.getElementById('copy').addEventListener("click", function() {
 onmessage = event => { 
   
   if(event.data.pluginMessage.type === "error") {      
-    document.getElementById('message').innerHTML = "";
-    document.getElementById('error').innerHTML = event.data.pluginMessage.message; 
+    document.getElementById("message").innerHTML = "";
+    document.getElementById("error").innerHTML = event.data.pluginMessage.message; 
     return;
   };
   
-  document.getElementById('error').innerHTML = "";  
-  document.getElementById('message').innerHTML = "Copy <strong>"+ event.data.pluginMessage.name + "</strong> to clipboard in Webflow format";      
+  document.getElementById("error").innerHTML = "";  
+  document.getElementById("message").innerHTML = "Copy <strong>"+ event.data.pluginMessage.name + "</strong> to clipboard in Webflow format";      
   jsondata = event.data.pluginMessage.jsondata;
   
   // Listen to copy event  
-  document.addEventListener('copy', event => {    
+  document.addEventListener("copy", event => {    
     //console.log("Copy");
     if (event.clipboardData) {    
-      event.clipboardData.setData('application/json', jsondata);                    
+      event.clipboardData.setData("application/json", jsondata);                    
     }
     event.preventDefault();  
   }, true);
   
   // Fire copy event
-  document.execCommand('copy');    
+  document.execCommand("copy");
 }
 
   
