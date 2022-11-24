@@ -13,18 +13,18 @@
   },
   "files": [
     "./src/code.ts",
-    "src/FigmaSelection.ts",
-    "./src/WebflowBuilder.ts",
-    "./src/WebflowElement.ts",
-    "./src/WebflowClass.ts",
-    "./src/Section.ts",
-    "./src/SectionClass.ts",
-    "./src/ContainerClass.ts",
-    "./src/Container.ts",
-    "./src/Grid.ts",
-    "./src/GridClass.ts",
-    "./src/Row.ts",
-    "./src/Column.ts",
-    "./src/Child.ts"
+    "src/Helpers/FigmaSelection.ts",
+    "src/Helpers/WebflowBuilder.ts",
+    "src/WebflowElements/WebflowElement.ts",
+    "src/WebflowClasses/WebflowClass.ts",
+    "src/WebflowElements/Section.ts",
+    "src/WebflowClasses/SectionClass.ts",
+    "src/WebflowClasses/ContainerClass.ts",
+    "src/WebflowElements/Container.ts",
+    "src/WebflowElements/Grid.ts",
+    "src/WebflowClasses/GridClass.ts",
+    "src/Helpers/Row.ts",
+    "src/Helpers/Column.ts",
+    "src/Helpers/Child.ts"
   ]  
 }

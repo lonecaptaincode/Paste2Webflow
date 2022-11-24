@@ -1,7 +1,7 @@
 /* 
 ========================================================================
  Copyright (C) 2022 lonecaptain. All Rights Reserved
- Creates a Child, which is an child element of the selected section
+ Creates a Child, which is a child element of the selected section
  =======================================================================
 */
 
