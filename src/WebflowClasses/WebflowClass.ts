@@ -20,6 +20,21 @@ abstract class WebflowClass {
 
     protected _styleLess: string = "";
 
+    protected _variants: {
+        tiny: { styleLess: string; },
+        small: { styleLess: string; },
+        medium: { styleLess: string; },
+        large: { styleLess: string; },
+        xl: { styleLess: string; },
+        xxl: { styleLess: string; };
+    } = {
+            tiny: { styleLess: "" },
+            small: { styleLess: "" },
+            medium: { styleLess: "" },
+            large: { styleLess: "" },
+            xl: { styleLess: "" },
+            xxl: { styleLess: "" }
+        };
 
     constructor(name: string) {
         this._id = name;
@@ -41,6 +56,10 @@ abstract class WebflowClass {
     }
 
 
+    protected setMediumStyle(style: string): void {
+        this._variants.medium = { styleLess: style };
+    }
+
     public get name(): string {
         return this._name;
     }
@@ -57,6 +76,14 @@ abstract class WebflowClass {
             "selector": string;
             "children": string[],
             "createdBy": string,
+            "variants": {
+                tiny: { styleLess: string; },
+                small: { styleLess: string; },
+                medium: { styleLess: string; },
+                large: { styleLess: string; },
+                xl: { styleLess: string; },
+                xxl: { styleLess: string; };
+            },
         }
             = {
             "styleLess": this._styleLess,
@@ -69,6 +96,7 @@ abstract class WebflowClass {
             "selector": this._selector,
             "children": this._childrenIDs,
             "createdBy": this._createdBy,
+            "variants": this._variants
         };
         return json;
     }

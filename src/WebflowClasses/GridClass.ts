@@ -25,6 +25,7 @@ class GridClass extends WebflowClass {
         //and delete them from columns/rows
 
         this.setStyleLess();
+        this.setVariants();
     }
 
     protected setStyleLess(): void {
@@ -39,6 +40,22 @@ class GridClass extends WebflowClass {
         this._styleLess = `grid-template-columns:${gridTemplateColumns}; grid-template-rows:${gridTemplateRows};grid-column-gap: 0px; grid-row-gap: 0px;`;
     }
 
+    protected setVariants(): void {
+        let totalColumnWidth = this.getTotalColumnWidth();
+
+        if (totalColumnWidth > 768) {
+            this.setMediumStyle("grid-template-columns:1fr;");
+        }
+    }
+
+
+    private getTotalColumnWidth(): number {
+        let totalColumnWidth = 0;
+        for (const column of this._columns) {
+            totalColumnWidth += column.finalWidth;
+        }
+        return totalColumnWidth;
+    }
 
     private buildColumns(): void {
 
@@ -67,7 +84,7 @@ class GridClass extends WebflowClass {
         this.calculateColumnsFinalWidth();
     }
 
-    private calculateColumnsFinalWidth() {
+    private calculateColumnsFinalWidth(): void {
 
         let previousColumn = this._columns[0];
         for (const column of this._columns) {
