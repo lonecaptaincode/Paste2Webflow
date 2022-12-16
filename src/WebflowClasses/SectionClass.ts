@@ -37,6 +37,7 @@ class SectionClass extends WebflowClass {
         const backgroundColor = this.transformFigmaRGBToHex(fill.color);
 
         this._styleLess = `background-color:${backgroundColor};height:${this._height}px;padding:${this._padding.top}px ${this._padding.right}px ${this._padding.bottom}px ${this._padding.left}px;`;
+        this.setMediumStyle("height:auto;");
     }
 
     public setPadding(): void {

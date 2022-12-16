@@ -59,6 +59,12 @@ abstract class WebflowClass {
     protected setMediumStyle(style: string): void {
         this._variants.medium = { styleLess: style };
     }
+    protected setSmallStyle(style: string): void {
+        this._variants.small = { styleLess: style };
+    }
+    protected setTinyStyle(style: string): void {
+        this._variants.tiny = { styleLess: style };
+    }
 
     public get name(): string {
         return this._name;

@@ -26,6 +26,9 @@ class ContainerClass extends WebflowClass {
 
     protected setStyleLess(): void {
         this._styleLess = `max-width:${this._parentSectionwidth}px;height:100%;padding:${this._padding.top}px ${this._padding.right}px ${this._padding.bottom}px ${this._padding.left}px;`;
+        this.setMediumStyle("padding-left:60px;padding-right:60px;");
+        this.setSmallStyle("padding-left:30px;padding-right:30px;");
+        this.setTinyStyle("padding-left:20px;padding-right:20px;");
     }
 
     public setPadding(): void {

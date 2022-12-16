@@ -19,7 +19,6 @@ class GridClass extends WebflowClass {
 
         this.buildColumns();
         this.setStyleLess();
-        this.setVariants();
     }
 
     protected setStyleLess(): void {
@@ -32,6 +31,7 @@ class GridClass extends WebflowClass {
         }
 
         this._styleLess = `grid-template-columns:${gridTemplateColumns}; grid-template-rows:${gridTemplateRows};grid-column-gap: 0px; grid-row-gap: 0px;`;
+        this.setVariants();
     }
 
     protected setVariants(): void {
