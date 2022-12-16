@@ -14,7 +14,7 @@ class ContainerClass extends WebflowClass {
 
     constructor(selectedFrame: FrameNode) {
 
-        super(selectedFrame.name + " Container");
+        super("Container");
 
         // For containers, we need the selectedFrame
         this._selectedFrame = selectedFrame;
