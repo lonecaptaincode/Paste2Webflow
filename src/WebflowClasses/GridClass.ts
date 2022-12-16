@@ -43,8 +43,13 @@ class GridClass extends WebflowClass {
         }
 
         if (totalColumnWidth > 768) {
-            console.log(rowStyle);
             this.setMediumStyle(`grid-template-columns:1fr;grid-template-rows:${rowStyle};`);
+        }
+        else if (totalColumnWidth > 480) {
+            this.setSmallStyle(`grid-template-columns:1fr;grid-template-rows:${rowStyle};`);
+        }
+        else if (totalColumnWidth > 240) {
+            this.setTinyStyle(`grid-template-columns:1fr;grid-template-rows:${rowStyle};`);
         }
     }
 
