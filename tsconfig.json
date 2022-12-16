@@ -22,9 +22,12 @@
     "src/WebflowClasses/ContainerClass.ts",
     "src/WebflowElements/Container.ts",
     "src/WebflowElements/Grid.ts",
-    "src/WebflowClasses/GridClass.ts",
+    "src/WebflowClasses/GridClass.ts",    
     "src/Helpers/Row.ts",
     "src/Helpers/Column.ts",
-    "src/Helpers/Child.ts"
+    "src/Helpers/Child.ts",
+    "src/WebflowElements/Wrapper.ts",
+    "src/WebflowClasses/WrapperClass.ts"
+
   ]  
 }

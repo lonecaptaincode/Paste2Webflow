@@ -50,7 +50,7 @@ class WebflowBuilder {
         };
 
     private _selectedFrame: FrameNode;
-    private _elements: (Section | Container | Grid)[] = [];
+    private _elements: (Section | Container | Grid | Wrapper)[] = [];
 
 
 

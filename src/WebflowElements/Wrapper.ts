@@ -6,15 +6,15 @@
 */
 
 
-class Grid extends WebflowElement {
+class Wrapper extends WebflowElement {
 
-    protected _class: GridClass;
+    protected _class: WrapperClass;
 
 
-    constructor(selectedFrame: FrameNode, parent: Container) {
+    constructor(selectedFrame: FrameNode, parent: Grid) {
         super();
 
-        this._class = new GridClass(selectedFrame);
+        this._class = new WrapperClass(selectedFrame);
         this._classNames.push(this._class.name);
 
         this._type = "Grid";
@@ -23,7 +23,7 @@ class Grid extends WebflowElement {
         parent.addChild(this._id);
     }
 
-    public get class(): GridClass {
+    public get class(): WrapperClass {
         return this._class;
     }
 }
